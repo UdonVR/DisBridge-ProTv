@@ -1,45 +1,52 @@
-
+﻿
 using System;
 using ArchiTech.ProTV;
 using UdonSharp;
 using UdonVR.DisBridge;
 using UnityEngine;
 using VRC.SDKBase;
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("UdonVR.DisBridge.Plugins.ProTv.Editor")]
 
 namespace UdonVR.DisBridge.Plugins.ProTv
 {
+    
     [UdonBehaviourSyncMode(BehaviourSyncMode.NoVariableSync)]
     [DefaultExecutionOrder(-1)]
     public class DisBridge_ProTV : TVAuthPlugin
     {
         [Tooltip("Leave this blank if you don't want it to unlock automatically.")]
-        [SerializeField] private PluginManager manager;
+        [SerializeField] internal PluginManager manager;
         
         [Space(5)]
         [Header("Authorized User")]
         ///////////////////
         [Tooltip("If this is True, it will allow All Staff to use the button.")]
-        [SerializeField] private bool checkStaff_Authorized = false;
+        [SerializeField] internal bool checkStaff_Authorized = false;
         [Tooltip("If this is True, it will allow All Supporters to use the button.")]
-        [SerializeField] private bool checkSupporters_Authorized = false;
-        [Tooltip("Adds the role specified to the unlock check./nUses Role ID")]
-        [SerializeField] private string[] checkRolesID_Authorized;
-        [Tooltip("Adds the role specified to the unlock check./nUses Role Index")]
-        [SerializeField] private int[] checkRoles_Authorized;
+        [SerializeField] internal bool checkSupporters_Authorized = false;
+        //[Tooltip("Adds the role specified to the unlock check./nUses Role ID")]
+        [SerializeField] internal string[] checkRolesID_Authorized;
+        //[Tooltip("Adds the role specified to the unlock check./nUses Role Index")]
+        //[SerializeField] internal int[] checkRoles_Authorized;
+
+        [SerializeField] internal RoleContainer[] AuthorizedUsers;
         
         ///////////////////
         [Space(5)]
         [Header("Super User")]
         [Tooltip("If this is True, it will allow All Staff to use the button.")]
-        [SerializeField] private bool checkStaff_Super = false;
+        [SerializeField] internal bool checkStaff_Super = false;
         [Tooltip("If this is True, it will allow All Supporters to use the button.")]
-        [SerializeField] private bool checkSupporters_Super = false;
-        [Tooltip("Adds the role specified to the unlock check./nUses Role ID")]
-        [SerializeField] private string[] checkRolesID_Super;
-        [Tooltip("Adds the role specified to the unlock check./nUses Role Index")]
-        [SerializeField] private int[] checkRoles_Super;
+        [SerializeField] internal bool checkSupporters_Super = false;
+        //[Tooltip("Adds the role specified to the unlock check./nUses Role ID")]
+        [SerializeField] internal string[] checkRolesID_Super;
+        //[Tooltip("Adds the role specified to the unlock check./nUses Role Index")]
+        //[SerializeField] internal int[] checkRoles_Super;
+        
+        [SerializeField] internal RoleContainer[] SuperUsers;
         public override void Start()
         {
+            
             manager.AddPlugin(gameObject);
         }
 
@@ -59,11 +66,16 @@ namespace UdonVR.DisBridge.Plugins.ProTv
                 return true;
             }
 
+            for (int i = 0; i < AuthorizedUsers.Length; i++)
+            {
+                if (AuthorizedUsers[i].IsMember(who)) return true;
+            }
+            /*
             if (checkRoles_Authorized != null && checkRoles_Authorized.Length != 0)
             {
                 for (int i = 0; i < checkRoles_Authorized.LongLength; i++)
                 {
-                    if (manager.IsMember(checkRoles_Authorized[i],Networking.LocalPlayer))
+                    if (manager.IsMember(checkRoles_Authorized[i],who))
                     {
                         return true;
                     }
@@ -74,12 +86,13 @@ namespace UdonVR.DisBridge.Plugins.ProTv
             {
                 for (int i = 0; i < checkRolesID_Authorized.LongLength; i++)
                 {
-                    if (manager.IsMember(checkRolesID_Authorized[i],Networking.LocalPlayer))
+                    if (manager.IsMember(checkRolesID_Authorized[i],who))
                     {
                         return true;
                     }
                 }
             }
+            */
             return false;
         }
 
@@ -93,12 +106,17 @@ namespace UdonVR.DisBridge.Plugins.ProTv
             {
                 return true;
             }
-
+            
+            for (int i = 0; i < SuperUsers.Length; i++)
+            {
+                if (SuperUsers[i].IsMember(who)) return true;
+            }
+            /*
             if (checkRoles_Super != null && checkRoles_Super.Length != 0)
             {
                 for (int i = 0; i < checkRoles_Super.LongLength; i++)
                 {
-                    if (manager.IsMember(checkRoles_Super[i],Networking.LocalPlayer))
+                    if (manager.IsMember(checkRoles_Super[i],who))
                     {
                         return true;
                     }
@@ -109,12 +127,13 @@ namespace UdonVR.DisBridge.Plugins.ProTv
             {
                 for (int i = 0; i < checkRolesID_Super.LongLength; i++)
                 {
-                    if (manager.IsMember(checkRolesID_Super[i],Networking.LocalPlayer))
+                    if (manager.IsMember(checkRolesID_Super[i],who))
                     {
                         return true;
                     }
                 }
             }
+            */
             return false;
         }
     }

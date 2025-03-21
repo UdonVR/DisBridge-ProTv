@@ -1,0 +1,28 @@
+{
+    "name": "UdonVR.DisBridge.Plugins.ProTv.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3c1bc1267eab5884ebe7f232c09ee0d9",
+        "GUID:99835874ee819da44948776e0df4ff1d",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:f70a94b0bedfa8ec50ed757f72032810",
+        "GUID:332ecdb5ec920c44daf4734dfc14ee33",
+        "GUID:a34edcc090795d24ebafb53fec5b4ca8",
+        "GUID:5b5aaf99749535a42aedbc3313fc3314",
+        "GUID:20e1c96b495bb2445875220e5b341661",
+        "GUID:53175f0f558bafd4fbd945a2e124f1a1"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UDONSHARP"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
